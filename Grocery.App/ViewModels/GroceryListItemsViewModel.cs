@@ -21,8 +21,9 @@ namespace Grocery.App.ViewModels
 
         [ObservableProperty]
         GroceryList groceryList = new(0, "None", DateOnly.MinValue, "", 0);
+        // Change the field/property declaration to nullable to fix CS8618
         [ObservableProperty]
-        string myMessage;
+        string? myMessage;
 
         public GroceryListItemsViewModel(IGroceryListItemsService groceryListItemsService, IProductService productService, IFileSaverService fileSaverService)
         {
