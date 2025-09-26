@@ -31,6 +31,7 @@ namespace Grocery.App.ViewModels
             _fileSaverService = fileSaverService;
             Load(groceryList.Id);
         }
+        private List<Product> _allProducts = new();
 
         private void Load(int id)
         {
@@ -42,9 +43,12 @@ namespace Grocery.App.ViewModels
         private void GetAvailableProducts()
         {
             AvailableProducts.Clear();
-            foreach (Product p in _productService.GetAll())
-                if (MyGroceryListItems.FirstOrDefault(g => g.ProductId == p.Id) == null  && p.Stock > 0)
-                    AvailableProducts.Add(p);
+            _allProducts = _productService.GetAll()
+                .Where(p => MyGroceryListItems.All(g => g.Product.Id != p.Id) && p.Stock > 0)
+                .ToList();
+
+            foreach (var p in _allProducts)
+                AvailableProducts.Add(p);
         }
 
         partial void OnGroceryListChanged(GroceryList value)
@@ -86,5 +90,30 @@ namespace Grocery.App.ViewModels
             }
         }
 
+        [RelayCommand]
+        public void Search(string searchTerm)
+        {
+            AvailableProducts.Clear();
+
+            IEnumerable<Product> filtered;
+
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                // Geen zoekterm -> alle producten tonen
+                filtered = _allProducts;
+            }
+            else
+            {
+                // Filter op naam
+                filtered = _allProducts
+                    .Where(p => p.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
+            }
+
+            foreach (var p in filtered)
+                AvailableProducts.Add(p);
+        }
+
+
+
     }
-}
+    }

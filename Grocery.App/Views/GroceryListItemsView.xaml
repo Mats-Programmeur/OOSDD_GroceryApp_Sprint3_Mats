@@ -25,7 +25,7 @@
         </Grid.ColumnDefinitions>
         <Border Grid.Column="0" Stroke="#C49B33" StrokeThickness="4" Padding="10" Margin="10" HorizontalOptions="Center">
             <CollectionView ItemsSource="{Binding MyGroceryListItems}" Margin="20" HorizontalOptions="Center" EmptyView="De boodschappenlijst is nog leeg. Voeg eerst boodschappen toe!">
-                <CollectionView.ItemsLayout>
+                <CollectionView.ItemsLayout>    
                     <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
                 </CollectionView.ItemsLayout>
 
@@ -54,6 +54,10 @@
 
         <Border Grid.Row="1" Grid.Column="1" Stroke="#C49B33" StrokeThickness="4" Padding="5" Margin="5" HorizontalOptions="Center">
             <StackLayout>
+                <SearchBar
+                    Placeholder="Zoek product..."
+                    SearchCommand="{Binding SearchCommand}"
+                    SearchCommandParameter="{Binding Text,Source={RelativeSource Self}}"/>
                 <CollectionView ItemsSource="{Binding AvailableProducts}" Margin="5" WidthRequest="300" HorizontalOptions="Start"
                     SelectionMode="Single"
                     SelectionChangedCommand="{Binding AddProductCommand}"
