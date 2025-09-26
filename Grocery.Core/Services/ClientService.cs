@@ -32,5 +32,11 @@ namespace Grocery.Core.Services
             List<Client> clients = _clientRepository.GetAll();
             return clients;
         }
+        public void Add(Client client)
+        {
+            // Voeg een id toe op basis van de hoogste bestaande id
+            client.Id = _clientRepository.GetAll().Max(c => c.Id) + 1;
+            _clientRepository.Add(client);
+        }
     }
 }

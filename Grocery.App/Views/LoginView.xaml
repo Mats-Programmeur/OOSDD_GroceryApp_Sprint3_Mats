@@ -11,5 +11,12 @@
         <Entry Placeholder="Password" Text="{Binding Password}" IsPassword="True" />
         <Button Text="Login" Command="{Binding LoginCommand}" />
         <Label Text="{Binding LoginMessage}" TextColor="Red" />
+        <!-- Registratie gedeelte -->
+        <Label Text="Registreren" FontSize="24" HorizontalOptions="Center" />
+        <Entry Placeholder="Naam" Text="{Binding RegisterName}" />
+        <Entry Placeholder="Email" Text="{Binding RegisterEmail}" Keyboard="Email" />
+        <Entry Placeholder="Wachtwoord" Text="{Binding RegisterPassword}" IsPassword="True" />
+        <Button Text="Registreren" Command="{Binding RegisterCommand}" />
+        <Label Text="{Binding RegisterMessage}" TextColor="Green" />
     </StackLayout>
 </ContentPage>
