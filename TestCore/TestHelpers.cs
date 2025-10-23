@@ -9,27 +9,37 @@ namespace TestCore
         {
         }
 
-        // Happy flow
+
+        //Happy flow
+        [Test]
+        public void TestPasswordHelperReturnsTrue()
+        {
+            string password = "user3";
+            string passwordHash = "sxnIcZdYt8wC8MYWcQVQjQ==.FKd5Z/jwxPv3a63lX+uvQ0+P7EuNYZybvkmdhbnkIHA=";
+            Assert.IsTrue(PasswordHelper.VerifyPassword(password, passwordHash));
+        }
+
+        [TestCase("user1", "IunRhDKa+fWo8+4/Qfj7Pg==.kDxZnUQHCZun6gLIE6d9oeULLRIuRmxmH2QKJv2IM08=")]
         [TestCase("user3", "sxnIcZdYt8wC8MYWcQVQjQ==.FKd5Z/jwxPv3a63lX+uvQ0+P7EuNYZybvkmdhbnkIHA=")]
-        public void TestPasswordHelperReturnsTrue_ValidHash(string password, string passwordHash)
+        public void TestPasswordHelperReturnsTrue(string password, string passwordHash)
         {
             Assert.IsTrue(PasswordHelper.VerifyPassword(password, passwordHash));
         }
 
-        // Unhappy flow
-        [TestCase("user1", "IunRhDKa+fWo8+4/Qfj7Pg==.kDxZnUQHCZun6gLIE6d9oeULLRIuRmxmH2QKJv2IM08")]
-        [TestCase("user3", "sxnIcZdYt8wC8MYWcQVQjQ==.FKd5Z/jwxPv3a63lX+uvQ0+P7EuNYZybvkmdhbnkIHA")]
-        public void TestPasswordHelperReturnsFalse_InvalidHash(string password, string passwordHash)
+
+        //Unhappy flow
+        [Test]
+        public void TestPasswordHelperReturnsFalse()
         {
+            string password = "user3";
+            string passwordHash = "sxnIcZdYt8wC8MYWcQVQjQ";
             Assert.IsFalse(PasswordHelper.VerifyPassword(password, passwordHash));
         }
 
-        // Unhappy flow with invalid hash
-        [Test]
-        public void TestPasswordHelperReturnsFalse_WithInvalidHash()
+        [TestCase("user1", "IunRhDKa+fWo8+4/Qfj7Pg")]
+        [TestCase("user3", "sxnIcZdYt8wC8MYWcQVQjQ")]
+        public void TestPasswordHelperReturnsFalse(string password, string passwordHash)
         {
-            string password = "user2";
-            string passwordHash = "invalidHash";
             Assert.IsFalse(PasswordHelper.VerifyPassword(password, passwordHash));
         }
     }
